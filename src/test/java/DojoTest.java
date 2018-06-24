@@ -22,7 +22,7 @@ public class DojoTest {
         ParameterParser parameterParser = new ParameterParser();
         List<Item> items = parameterParser.parse(params);
 
-        Assert.assertEquals(new Item("MLA123456", 1), items.get(0));
+        Assert.assertEquals(new SingleQuantityItem("MLA123456"), items.get(0));
     }
 
     @Test
@@ -32,46 +32,45 @@ public class DojoTest {
         ParameterParser parameterParser = new ParameterParser();
         List<Item> items = parameterParser.parse(params);
 
-        Assert.assertEquals(new Item("MLA123456", 1), items.get(0));
-        Assert.assertEquals(new Item("MLA234567", 2), items.get(1));
+        Assert.assertEquals(new SingleQuantityItem("MLA123456"), items.get(0));
+        Assert.assertEquals(new MultipleQuantityItem("MLA234567", 2), items.get(1));
     }
-
 
     @Test
     public void create_flow_request_from_one_item() {
 
         List<Item> items = new ArrayList<>();
-        items.add(new Item("MLA12345", 1));
+        items.add(new SingleQuantityItem("MLA12345"));
 
-        FlowRequestFactory flowRequestBuilder = new FlowRequestFactory();
-        FlowRequest flowRequest = flowRequestBuilder.create(items);
+        ItemList itemList = new ItemList(items);
+        FlowUseCase flowUseCase = itemList.createFlowUseCase();
 
-        Assert.assertTrue(flowRequest instanceof SingleItemFlowRequest);
+        Assert.assertTrue(flowUseCase instanceof SingleItemFlowUseCase);
     }
 
     @Test
     public void create_flow_request_from_one_item_multiple_quantity() {
 
         List<Item> items = new ArrayList<>();
-        items.add(new Item("MLA12345", 5));
+        items.add(new MultipleQuantityItem("MLA12345", 5));
 
-        FlowRequestFactory flowRequestBuilder = new FlowRequestFactory();
-        FlowRequest flowRequest = flowRequestBuilder.create(items);
+        ItemList itemList = new ItemList(items);
+        FlowUseCase flowUseCase = itemList.createFlowUseCase();
 
-        Assert.assertTrue(flowRequest instanceof SingleItemMultipleQuantityFlowRequest);
+        Assert.assertTrue(flowUseCase instanceof SingleItemMultipleQuantityFlowUseCase);
     }
 
     @Test
     public void create_flow_request_from_multiple_item() {
 
         List<Item> items = new ArrayList<>();
-        items.add(new Item("MLA12345", 1));
-        items.add(new Item("MLA23456", 1));
+        items.add(new SingleQuantityItem("MLA12345"));
+        items.add(new SingleQuantityItem("MLA23456"));
 
-        FlowRequestFactory flowRequestBuilder = new FlowRequestFactory();
-        FlowRequest flowRequest = flowRequestBuilder.create(items);
+        ItemList itemList = new ItemList(items);
+        FlowUseCase flowUseCase = itemList.createFlowUseCase();
 
-        Assert.assertTrue(flowRequest instanceof MultipleItemFlowRequest);
+        Assert.assertTrue(flowUseCase instanceof MultipleItemFlowUseCase);
     }
 
     @Test
@@ -79,7 +78,15 @@ public class DojoTest {
 
         UseCaseInteractor useCaseInteractor = new UseCaseInteractor();
 
-        Assert.assertEquals(useCaseInteractor.execute(new SingleItemFlowRequest()), new DirectFlow());
+        Assert.assertEquals(useCaseInteractor.execute(new SingleItemFlowUseCase()), new DirectFlow());
+    }
+
+    @Test
+    public void test_one_item_and_quantity_many_should_goto_direct() {
+
+        UseCaseInteractor useCaseInteractor = new UseCaseInteractor();
+
+        Assert.assertEquals(useCaseInteractor.execute(new SingleItemMultipleQuantityFlowUseCase()), new DirectFlow());
     }
 
     @Test
@@ -87,6 +94,6 @@ public class DojoTest {
 
         UseCaseInteractor useCaseInteractor = new UseCaseInteractor();
 
-        Assert.assertEquals(useCaseInteractor.execute(new MultipleItemFlowRequest()), new CartFlow());
+        Assert.assertEquals(useCaseInteractor.execute(new MultipleItemFlowUseCase()), new CartFlow());
     }
 }

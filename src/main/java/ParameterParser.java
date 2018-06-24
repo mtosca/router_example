@@ -17,7 +17,11 @@ public class ParameterParser {
     private Item itemFromString(String itemString) {
         String[] values = itemString.split("-");
 
-        String quantity = values[1].replace('Q', ' ').trim();
-        return new Item(values[0], new Integer(quantity));
+        String quantityStr = values[1].replace('Q', ' ').trim();
+
+        return new ItemBuilder()
+                .withId(values[0])
+                .withQuantity(new Integer(quantityStr))
+                .build();
     }
 }

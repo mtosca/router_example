@@ -3,11 +3,15 @@ public class UseCaseInteractor {
     public UseCaseInteractor() {
     }
 
-    public CartFlow execute(MultipleItemFlowRequest multipleItemFlowRequest) {
-        return new CartFlow();
+    public FlowResponse execute(MultipleItemFlowUseCase multipleItemFlowUseCase) {
+        return multipleItemFlowUseCase.selectFlow();
     }
 
-    public DirectFlow execute(SingleItemFlowRequest multipleItemFlowRequest) {
-        return new DirectFlow();
+    public FlowResponse execute(SingleItemFlowUseCase singleItemFlowUseCase) {
+        return singleItemFlowUseCase.selectFlow();
+    }
+
+    public FlowResponse execute(SingleItemMultipleQuantityFlowUseCase singleItemMultipleQuantityFlowUseCase) {
+        return singleItemMultipleQuantityFlowUseCase.selectFlow();
     }
 }

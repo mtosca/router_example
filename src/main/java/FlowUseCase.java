@@ -1,4 +1,5 @@
-public interface FlowRequest {
+public interface FlowUseCase {
 
+    FlowResponse selectFlow();
 
 }

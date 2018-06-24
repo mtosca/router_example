@@ -1,4 +1,4 @@
-public class DirectFlow {
+public class DirectFlow implements FlowResponse {
 
     public DirectFlow() {
     }

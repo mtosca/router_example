@@ -1,4 +1,4 @@
-public class CartFlow {
+public class CartFlow implements FlowResponse {
     public CartFlow() {
     }
 
