@@ -1,4 +1,9 @@
+package entities;
+
+import boundaries.FlowResponse;
+
 public class CartFlow implements FlowResponse {
+
     public CartFlow() {
     }
 

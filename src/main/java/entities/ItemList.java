@@ -1,3 +1,7 @@
+package entities;
+
+import usecases.Scenario;
+
 import java.util.List;
 
 public class ItemList {
@@ -8,12 +12,12 @@ public class ItemList {
         this.items = items;
     }
 
-    public FlowUseCase createFlowUseCase() {
+    public Scenario createFlowUseCase() {
 
-        if (items.size() > 1) return new MultipleItemFlowUseCase();
+        if (items.size() > 1) return new MultipleItemScenario();
 
         Item item = items.get(0);
 
-        return item.createFlowUseCase();
+        return item.createScenario();
     }
 }

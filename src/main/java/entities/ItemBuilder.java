@@ -1,3 +1,5 @@
+package entities;
+
 public class ItemBuilder {
 
     private String id;

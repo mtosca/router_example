@@ -1,6 +1,9 @@
+import entities.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import usecases.Scenario;
+import usecases.UseCaseInteractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +46,9 @@ public class DojoTest {
         items.add(new SingleQuantityItem("MLA12345"));
 
         ItemList itemList = new ItemList(items);
-        FlowUseCase flowUseCase = itemList.createFlowUseCase();
+        Scenario scenario = itemList.createFlowUseCase();
 
-        Assert.assertTrue(flowUseCase instanceof SingleItemFlowUseCase);
+        Assert.assertTrue(scenario instanceof SingleItemScenario);
     }
 
     @Test
@@ -55,9 +58,9 @@ public class DojoTest {
         items.add(new MultipleQuantityItem("MLA12345", 5));
 
         ItemList itemList = new ItemList(items);
-        FlowUseCase flowUseCase = itemList.createFlowUseCase();
+        Scenario scenario = itemList.createFlowUseCase();
 
-        Assert.assertTrue(flowUseCase instanceof SingleItemMultipleQuantityFlowUseCase);
+        Assert.assertTrue(scenario instanceof SingleItemMultipleQuantityScenario);
     }
 
     @Test
@@ -68,9 +71,9 @@ public class DojoTest {
         items.add(new SingleQuantityItem("MLA23456"));
 
         ItemList itemList = new ItemList(items);
-        FlowUseCase flowUseCase = itemList.createFlowUseCase();
+        Scenario scenario = itemList.createFlowUseCase();
 
-        Assert.assertTrue(flowUseCase instanceof MultipleItemFlowUseCase);
+        Assert.assertTrue(scenario instanceof MultipleItemScenario);
     }
 
     @Test
@@ -78,7 +81,7 @@ public class DojoTest {
 
         UseCaseInteractor useCaseInteractor = new UseCaseInteractor();
 
-        Assert.assertEquals(useCaseInteractor.execute(new SingleItemFlowUseCase()), new DirectFlow());
+        Assert.assertEquals(useCaseInteractor.execute(new SingleItemScenario()), new DirectFlow());
     }
 
     @Test
@@ -86,7 +89,7 @@ public class DojoTest {
 
         UseCaseInteractor useCaseInteractor = new UseCaseInteractor();
 
-        Assert.assertEquals(useCaseInteractor.execute(new SingleItemMultipleQuantityFlowUseCase()), new DirectFlow());
+        Assert.assertEquals(useCaseInteractor.execute(new SingleItemMultipleQuantityScenario()), new DirectFlow());
     }
 
     @Test
@@ -94,6 +97,6 @@ public class DojoTest {
 
         UseCaseInteractor useCaseInteractor = new UseCaseInteractor();
 
-        Assert.assertEquals(useCaseInteractor.execute(new MultipleItemFlowUseCase()), new CartFlow());
+        Assert.assertEquals(useCaseInteractor.execute(new MultipleItemScenario()), new CartFlow());
     }
 }

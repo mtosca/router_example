@@ -1,25 +1,29 @@
+package entities;
+
+import usecases.Scenario;
+
 import java.util.Objects;
 
-public class SingleQuantityItem implements Item {
+public class MultipleQuantityItem implements Item {
 
     private final String id;
     private final Integer quantity;
 
-    public SingleQuantityItem(String id) {
+    public MultipleQuantityItem(String id, Integer quantity) {
         this.id = id;
-        this.quantity = 1;
+        this.quantity = quantity;
     }
 
     @Override
-    public FlowUseCase createFlowUseCase() {
-        return new SingleItemFlowUseCase();
+    public Scenario createScenario() {
+        return new SingleItemMultipleQuantityScenario();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SingleQuantityItem item = (SingleQuantityItem) o;
+        MultipleQuantityItem item = (MultipleQuantityItem) o;
         return Objects.equals(id, item.id) &&
                 Objects.equals(quantity, item.quantity);
     }
@@ -29,4 +33,5 @@ public class SingleQuantityItem implements Item {
 
         return Objects.hash(id, quantity);
     }
+
 }

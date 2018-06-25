@@ -1,4 +1,9 @@
-public class SingleItemMultipleQuantityFlowUseCase implements FlowUseCase {
+package entities;
+
+import boundaries.FlowResponse;
+import usecases.Scenario;
+
+public class SingleItemMultipleQuantityScenario implements Scenario {
 
     //private final ShippingGateway shippingGateway;
 
